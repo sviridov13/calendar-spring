@@ -2,9 +2,6 @@ package com.example.calendar.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.filter.GenericFilterBean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -16,15 +13,6 @@ import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
 
 @Configuration
 @EnableSwagger2
@@ -38,6 +26,30 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         super.addResourceHandlers(registry);
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .useDefaultResponseMessages(false)
+                .tags(new Tag("events", "API по работе с событиями"))
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+     /**
+     * Информация о API
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Календарь")
+                .description("Личный календарь")
+                .contact(new Contact("Борис Тарелкин", "http://www.csu.ru/Lists/List4/sotrudnik.aspx?ID=370", "tarelkinba@gmail.com"))
+                .version("1.0.0")
+                .build();
     }
 
 }
