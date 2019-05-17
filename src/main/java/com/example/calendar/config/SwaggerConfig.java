@@ -47,7 +47,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         return new ApiInfoBuilder()
                 .title("Календарь")
                 .description("Личный календарь")
-                .contact(new Contact("Борис Тарелкин", "http://www.csu.ru/Lists/List4/sotrudnik.aspx?ID=370", "tarelkinba@gmail.com"))
+                .contact(new Contact("Никита Свиридов", "https://t.me/nasviridov", "n.sviridov14@gmail.com"))
                 .version("1.0.0")
                 .build();
     }
